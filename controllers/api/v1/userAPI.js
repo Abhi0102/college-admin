@@ -1,4 +1,7 @@
 const User = require("../../../models/user");
+const jwt = require("jsonwebtoken");
+const nextSeq = require("../../../helpers/appGenerator");
+// const { getNextSequence } = require("../../../helpers/appGenerator");
 
 module.exports.register = async function (req, res) {
   // Checking If password matches
@@ -42,19 +45,46 @@ module.exports.register = async function (req, res) {
 };
 
 module.exports.userLogin = async function (req, res) {
-  const user = await User.findOne({
-    userName: req.body.userName,
-  });
-
-  if (user && user.password === req.body.password) {
-    console.log("Success");
-  } else {
-    return res.status(401).json({
-      data: {
-        success: false,
-        message: "Username or Password Incorrect",
-      },
+  try {
+    const user = await User.findOne({
+      userName: req.body.userName,
     });
-    // console.log("Username or Password Incorrect");
+
+    if (user && user.password === req.body.password) {
+      const userJWT = {
+        _id: user._id,
+        name: user.name,
+        userName: user.userName,
+      };
+
+      // console.log("Success");
+      return res.status(200).json({
+        data: {
+          token: jwt.sign(userJWT, "abhishek", { expiresIn: "50000000" }),
+          success: true,
+          user: userJWT,
+        },
+      });
+    } else {
+      return res.status(422).json({
+        data: {
+          success: false,
+          message: "Username or Password Incorrect",
+        },
+      });
+      // console.log("Username or Password Incorrect");
+    }
+  } catch (err) {
+    console.log(`Error in userLogin ${err}`);
   }
+};
+
+module.exports.authenticate = function (req, res) {
+  // console.log(req.body);
+
+  return res.status(200).json({
+    data: {
+      success: true,
+    },
+  });
 };
