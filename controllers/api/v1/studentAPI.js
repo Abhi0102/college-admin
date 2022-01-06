@@ -1,7 +1,11 @@
 const Student = require("../../../models/studentForm");
 const Counter = require("../../../helpers/appGenerator");
+const StudentQualification = require("../../../models/studentQualification");
 
 module.exports.studentForm = async function (req, res) {
+  // console.log(JSON.parse(req.body.qualification));
+  req.body.qualification = JSON.parse(req.body.qualification);
+  
   if (
     !/^\d+$/.test(req.body.mobileNumber) ||
     req.body.mobileNumber.length !== 10
@@ -17,7 +21,6 @@ module.exports.studentForm = async function (req, res) {
     !/^\d+$/.test(req.body.gaurdianMobileNumber) ||
     req.body.gaurdianMobileNumber.length !== 10
   ) {
-    console.log("Gaurd Numer");
     return res.status(422).json({
       data: {
         success: false,
@@ -25,7 +28,6 @@ module.exports.studentForm = async function (req, res) {
       },
     });
   } else if (!/^\d+$/.test(req.body.gaurdianAnualIncome)) {
-    console.log("Anual Numer");
     return res.status(422).json({
       data: {
         success: false,
@@ -41,12 +43,16 @@ module.exports.studentForm = async function (req, res) {
     });
   }
 
-  console.log(req.body);
+  
 
   try {
     req.body.appNo = await Counter.getNextSequence("app_no");
     const student = await Student.create({
       ...req.body,
+    });
+    const studentQualification = await StudentQualification.create({
+      student_id: student._id,
+      qualification: req.body.qualification,
     });
     return res.status(200).json({
       data: {
@@ -58,6 +64,28 @@ module.exports.studentForm = async function (req, res) {
   }
   //   console.log(/d^\d+$/.test(req.body.gaurdianMobileNumber));
   return res.status(200).json({
-    status: true,
+    data: {
+      success: true,
+    },
   });
+};
+
+module.exports.getStudents = async function (req, res) {
+  try {
+    const student = await Student.find().sort({ appNo: -1 });
+    return res.status(200).json({
+      data: {
+        success: true,
+        studentList: student,
+      },
+    });
+  } catch (err) {
+    console.log("Error in finding Students");
+    return res.status(422).json({
+      data: {
+        success: false,
+        error: err,
+      },
+    });
+  }
 };

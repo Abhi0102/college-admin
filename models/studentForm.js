@@ -28,7 +28,6 @@ const studentSchema = new mongoose.Schema(
     },
     subCategory: {
       type: String,
-      required: true,
     },
     vatsalyaYojana: {
       type: String,

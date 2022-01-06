@@ -13,6 +13,12 @@ router.post(
   studentAPI.studentForm
 );
 
+router.get(
+  "/fetchStudents",
+  passport.authenticate("jwt", { session: false }),
+  studentAPI.getStudents
+);
+
 // router.post("/register", userAPI.register);
 
 module.exports = router;
