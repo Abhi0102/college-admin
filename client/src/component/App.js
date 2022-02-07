@@ -7,7 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 import { authenticateUser } from "../actions/auth";
 import theme from "../Theme";
 
-
 function App(props) {
   useEffect(() => {
     const token = localStorage.getItem("token");
