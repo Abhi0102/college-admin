@@ -60,7 +60,9 @@ module.exports.userLogin = async function (req, res) {
       // console.log("Success");
       return res.status(200).json({
         data: {
-          token: jwt.sign(userJWT, "abhishek", { expiresIn: "50000000" }),
+          token: jwt.sign(userJWT, process.env.SECRET, {
+            expiresIn: "50000000",
+          }),
           success: true,
           user: userJWT,
         },
