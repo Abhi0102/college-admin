@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 const opts = {
   jwtFromRequest: extractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "abhishek",
+  secretOrKey: process.env.SECRET,
 };
 
 passport.use(
