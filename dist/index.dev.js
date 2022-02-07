@@ -1,19 +1,25 @@
-const dotenv = require("dotenv").config();
-const express = require("express");
-const routes = require("./routes");
-const db = require("./config/mongoose");
-const passport = require("passport");
-const jwtPassport = require("./config/passport-jwt");
-const path = require("path");
-const port = process.env.port || 4000;
-const app = express();
+"use strict";
 
-app.use(express.urlencoded());
-// app.use((req, res, next) => {
+var dotenv = require("dotenv").config();
+
+var express = require("express");
+
+var routes = require("./routes");
+
+var db = require("./config/mongoose");
+
+var passport = require("passport");
+
+var jwtPassport = require("./config/passport-jwt");
+
+var path = require("path");
+
+var port = process.env.port || 4000;
+var app = express();
+app.use(express.urlencoded()); // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   next();
 // });
-
 // app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PATCH");
@@ -25,18 +31,17 @@ app.use(express.urlencoded());
 // });
 
 app.use("/", routes);
-app.use(express.static("client/build"));
-app.get("*", (req, res) => {
+app.use(express["static"]("client/build"));
+app.get("*", function (req, res) {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 app.listen(port, function (err) {
   if (err) {
-    console.log(`Error : ${err}`);
+    console.log("Error : ".concat(err));
   }
-  console.log(`Server Running on Port: ${port}`);
-});
 
-// const dotenv = require("dotenv").config();
+  console.log("Server Running on Port: ".concat(port));
+}); // const dotenv = require("dotenv").config();
 // const express = require("express");
 // const routes = require("./routes");
 // const db = require("./config/mongoose");
@@ -46,9 +51,7 @@ app.listen(port, function (err) {
 // const path = require("path");
 // const port = env.port;
 // const app = express();
-
 // app.use(express.urlencoded());
-
 // app.use(function (req, res, next) {
 //   // res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
@@ -58,13 +61,11 @@ app.listen(port, function (err) {
 //   );
 //   next();
 // });
-
 // app.use("/", routes);
 // app.use(express.static("client/build"));
 // app.get("*", (req, res) => {
 //   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 // });
-
 // app.listen(port, function (err) {
 //   if (err) {
 //     console.log(`Error : ${err}`);
