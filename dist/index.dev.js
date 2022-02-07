@@ -12,9 +12,9 @@ var passport = require("passport");
 
 var jwtPassport = require("./config/passport-jwt");
 
-var path = require("path");
+var path = require("path"); // const port = process.env.port || 4000;
 
-var port = process.env.port || 4000;
+
 var app = express();
 app.use(express.urlencoded()); // app.use((req, res, next) => {
 //   res.header("Access-Control-Allow-Origin", "*");
@@ -35,7 +35,7 @@ app.use(express["static"]("client/build"));
 app.get("*", function (req, res) {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
-app.listen(port, function (err) {
+app.listen(process.env.PORT || 4000, function (err) {
   if (err) {
     console.log("Error : ".concat(err));
   }

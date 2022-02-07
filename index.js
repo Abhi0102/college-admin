@@ -5,7 +5,7 @@ const db = require("./config/mongoose");
 const passport = require("passport");
 const jwtPassport = require("./config/passport-jwt");
 const path = require("path");
-const port = process.env.port || 4000;
+// const port = process.env.port || 4000;
 const app = express();
 
 app.use(express.urlencoded());
@@ -29,7 +29,7 @@ app.use(express.static("client/build"));
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
-app.listen(port, function (err) {
+app.listen(process.env.PORT || 4000, function (err) {
   if (err) {
     console.log(`Error : ${err}`);
   }
