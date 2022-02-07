@@ -17,4 +17,13 @@ router.get(
 
 router.post("/register", userAPI.register);
 
+router.get("/", function (req, res) {
+  return res.status(200).json({
+    status: true,
+    data: {
+      a: "Hello",
+      b: "Yolo",
+    },
+  });
+});
 module.exports = router;
