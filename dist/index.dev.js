@@ -15,18 +15,19 @@ var jwtPassport = require("./config/passport-jwt");
 var path = require("path");
 
 var app = express();
+var PORT = process.env.PORT || 4000;
 app.use(express.urlencoded());
 app.use("/api", routes);
 app.use(express["static"]("client/build"));
 app.get("*", function (req, res) {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
-app.listen(process.env.PORT || 4000, function (err) {
+app.listen(PORT, function (err) {
   if (err) {
     console.log("Error : ".concat(err));
   }
 
-  console.log("Server Running on Port: ".concat(port));
+  console.log("Server Running on Port: ".concat(PORT));
 }); // const dotenv = require("dotenv").config();
 // const express = require("express");
 // const routes = require("./routes");
