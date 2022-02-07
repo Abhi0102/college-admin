@@ -14,8 +14,11 @@ var jwtPassport = require("./config/passport-jwt");
 
 var path = require("path");
 
+var cors = require("cors");
+
 var app = express();
 var PORT = process.env.PORT || 4000;
+app.use(cors());
 app.use(express.urlencoded());
 app.use("/api", routes);
 app.use(express["static"]("client/build"));

@@ -5,9 +5,11 @@ const db = require("./config/mongoose");
 const passport = require("passport");
 const jwtPassport = require("./config/passport-jwt");
 const path = require("path");
+const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+app.use(cors());
 app.use(express.urlencoded());
 
 app.use("/api", routes);
