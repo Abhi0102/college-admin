@@ -10,6 +10,10 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    studentClass: {
+      type: String,
+      required: true,
+    },
     fatherName: {
       type: String,
       required: true,
@@ -65,6 +69,14 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    gaurdianAddress: {
+      type: String,
+      required: true,
+    },
+    annualIncome: {
+      type: String,
+      required: true,
+    },
     religion: {
       type: String,
       required: true,
@@ -99,6 +111,11 @@ const studentSchema = new mongoose.Schema(
     },
     aadhaarNumber: {
       type: String,
+      required: true,
+    },
+    qualification: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "StudentQualification",
       required: true,
     },
   },

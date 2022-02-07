@@ -4,7 +4,7 @@ const studentQualificationSchema = new mongoose.Schema(
   {
     student_id: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      ref: "Student",
     },
 
     qualification: {
