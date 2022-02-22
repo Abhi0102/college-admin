@@ -13,10 +13,10 @@ app.use(cors());
 app.use(express.urlencoded());
 
 app.use("/api", routes);
-// app.use(express.static("client/build"));
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-// });
+app.use(express.static("client/build"));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 app.listen(PORT, function (err) {
   if (err) {
     console.log(`Error : ${err}`);
