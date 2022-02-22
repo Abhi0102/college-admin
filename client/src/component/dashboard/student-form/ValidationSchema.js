@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 // import { array } from "yup";
-import { model } from "./FormModel";
+import { model } from "../student-profile/FormModel";
 
 const {
   formField: {
@@ -40,9 +40,9 @@ const {
   },
 } = model;
 
-export default [
-  Yup.object().shape({
-    [appNo.name]: Yup.string(),
+export default {
+  "Personal Details": Yup.object().shape({
+    [appNo.name]: Yup.string().required(`${appNo.errorMessage}`),
     [admDate.name]: Yup.date().required(`${admDate.errorMessage}`),
     [studentName.name]: Yup.string().required(`${studentName.errorMessage}`),
     [studentClass.name]: Yup.string().required(`${studentClass.errorMessage}`),
@@ -70,9 +70,8 @@ export default [
     [vatsalyaYojana.name]: Yup.string().required(
       `${vatsalyaYojana.errorMessage}`
     ),
-
-    // Second
-
+  }),
+  "Family Details": Yup.object().shape({
     [fatherName.name]: Yup.string().required(`${fatherName.errorMessage}`),
     [motherName.name]: Yup.string().required(`${motherName.errorMessage}`),
     [gaurdianName.name]: Yup.string().required(`${gaurdianName.errorMessage}`),
@@ -89,9 +88,8 @@ export default [
         `${gaurdianMobileNumber.invalidMessage}`,
         (val) => val && val.length === 10
       ),
-
-    // Third
-
+  }),
+  "Address Details": Yup.object().shape({
     [permanentAddress.name]: Yup.string().required(
       `${permanentAddress.errorMessage}`
     ),
@@ -108,9 +106,8 @@ export default [
     [residanceOfUK.name]: Yup.string().required(
       `${residanceOfUK.errorMessage}`
     ),
-
-    // Forth
-
+  }),
+  "Education Qualification": Yup.object().shape({
     [instituteRegion.name]: Yup.string().required(
       `${instituteRegion.errorMessage}`
     ),
@@ -121,9 +118,8 @@ export default [
     [subject1.name]: Yup.string().required(`${subject1.errorMessage}`),
     [subject2.name]: Yup.string(),
     [subject3.name]: Yup.string(),
-
-    // Fifth
-
+  }),
+  "Education History": Yup.object().shape({
     [qualification.name]: Yup.array(
       Yup.object({
         examination: Yup.string().required(`${studentName.errorMessage}`),
@@ -134,4 +130,4 @@ export default [
       })
     ).min(1),
   }),
-];
+};

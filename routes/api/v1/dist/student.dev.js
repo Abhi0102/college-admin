@@ -34,4 +34,5 @@ router.post("/generateIdCard", passport.authenticate("jwt", {
 router.get("/generateIdCard", passport.authenticate("jwt", {
   session: false
 }), genPDF.getPdf);
+router.get("/correction", studentAPI.studentCorrection);
 module.exports = router;

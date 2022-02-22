@@ -5,7 +5,6 @@ import SelectField from "../../input-fields/SelectField";
 import DatePickerField from "../../input-fields/DatePickerField";
 
 function GlobalForm(props) {
-  console.log();
   const { isDisabled, formDetail, isNewStudent } = props;
   const formData = { ...props.formField };
 
@@ -35,7 +34,7 @@ function GlobalForm(props) {
                 <DatePickerField
                   name={fieldData.name}
                   label={fieldData.label}
-                  format="dd/mm/yyyy"
+                  inputFormat="dd/MM/yyyy"
                   views={["year", "month", "day"]}
                   maxDate={new Date()}
                   fullWidth

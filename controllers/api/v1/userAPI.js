@@ -1,6 +1,9 @@
 const User = require("../../../models/user");
 const jwt = require("jsonwebtoken");
 const nextSeq = require("../../../helpers/appGenerator");
+const Constant = require("../../../models/constants");
+const FormField = require("../../../models/formField");
+const Options = require("../../../models/options");
 // const { getNextSequence } = require("../../../helpers/appGenerator");
 
 module.exports.register = async function (req, res) {
@@ -89,4 +92,34 @@ module.exports.authenticate = function (req, res) {
       success: true,
     },
   });
+};
+
+// module.exports.dataCorrection = function(req,res){
+//   const student =
+// }
+
+module.exports.fetchConstants = async function (req, res) {
+  try {
+    const formField = await FormField.find({}).sort("order");
+    for (let i in formField) {
+      const data = formField[i].data;
+      for (let k in data) {
+        if (data[k].type === "select") {
+          const opt = await Options.findById(data[k].option);
+          data[k].option = opt.data;
+        }
+      }
+    }
+    const options = await Options.find({});
+
+    return res.status(200).json({
+      success: true,
+      data: { formField, options },
+    });
+  } catch (err) {
+    return res.status(422).json({
+      success: false,
+      message: "Some error occured while fetching Constants",
+    });
+  }
 };

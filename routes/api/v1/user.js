@@ -17,13 +17,10 @@ router.get(
 
 router.post("/register", userAPI.register);
 
-router.get("/", function (req, res) {
-  return res.status(200).json({
-    status: true,
-    data: {
-      a: "Hello",
-      b: "Yolo",
-    },
-  });
-});
+router.get(
+  "/fetchConstants",
+  passport.authenticate("jwt", { session: false }),
+  userAPI.fetchConstants
+);
+
 module.exports = router;

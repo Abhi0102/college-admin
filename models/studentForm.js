@@ -5,6 +5,11 @@ const studentSchema = new mongoose.Schema(
     appNo: {
       type: Number,
       required: true,
+      unique: true,
+    },
+    admDate: {
+      type: Date,
+      required: true,
     },
     studentName: {
       type: String,
@@ -114,9 +119,19 @@ const studentSchema = new mongoose.Schema(
       required: true,
     },
     qualification: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "StudentQualification",
+      type: Array,
       required: true,
+      // required: true,
+    },
+    subject1: {
+      type: String,
+      required: true,
+    },
+    subject2: {
+      type: String,
+    },
+    subject3: {
+      type: String,
     },
   },
   {

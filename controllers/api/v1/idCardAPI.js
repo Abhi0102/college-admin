@@ -32,6 +32,7 @@ function getSingleCard(student) {
             text: getUnivName(),
             colSpan: 9,
             style: "headerFirst",
+            fillColor: getColor(student.studentClass),
             border: getRightSide(),
           },
           "",
@@ -48,6 +49,7 @@ function getSingleCard(student) {
           {
             text: getCollegeName(),
             style: "headerFirst",
+            fillColor: getColor(student.studentClass),
             colSpan: 9,
             border: getRightSide(),
           },
@@ -160,7 +162,7 @@ function getSingleCard(student) {
           { text: "DOB", border: getMidCell() },
           { text: ":", border: getMidCell() },
           {
-            text: student.dateOfBirth.toLocaleDateString(),
+            text: student.dateOfBirth.toLocaleDateString("en-GB"),
             border: getMidCell(),
             style: "highlight",
           },
@@ -174,7 +176,9 @@ function getSingleCard(student) {
           { text: ":", border: getMidCell() },
 
           {
-            text: student.createdAt.toLocaleDateString(),
+            text: student.admDate
+              ? student.admDate.toLocaleDateString("en-GB")
+              : student.createdAt.toLocaleDateString("en-GB"),
             colSpan: 2,
             style: "highlight",
             border: getMidCell(),
@@ -192,8 +196,13 @@ function getSingleCard(student) {
           { text: ":", border: getMidCell() },
 
           {
-            text: student.subjects,
-            colSpan: 3,
+            text: getSubjects(
+              student.subject1,
+              student.subject2,
+              student.subject3
+            ),
+            colSpan: 4,
+            style: "highlight",
             border: getMidCell(),
           },
           { text: "", border: getMidCell() },
@@ -311,6 +320,29 @@ async function getColumns(ids) {
   return li;
 }
 
+function getSubjects(subject1, subject2, subject3) {
+  let subString =
+    (subject1 ? subject1 : "") +
+    ", " +
+    (subject2 ? subject2 : "") +
+    ", " +
+    (subject3 ? subject3 : "");
+
+  subString = subString.replace(/(^[,\s]+)|([,\s]+$)/g, "");
+  return subString;
+}
+
+function getColor(studentClass) {
+  if (studentClass) {
+    if (studentClass.startsWith("B.Com.")) {
+      return "#168a01";
+    } else if (studentClass.startsWith("B.A.")) {
+      return "#800000";
+    }
+  }
+  return "#800000";
+}
+
 module.exports.pdfCreate = async function (req, res) {
   try {
     const reqData = req.body;
@@ -356,7 +388,7 @@ module.exports.pdfCreate = async function (req, res) {
       styles: {
         headerFirst: {
           fontSize: 8,
-          fillColor: "#800000",
+          // fillColor: getColor(student.studentClass),
           bold: true,
           color: "white",
           alignment: "center",
@@ -382,7 +414,7 @@ module.exports.pdfCreate = async function (req, res) {
     console.log(__dirname);
     pdfDoc.end();
     // res.sendFile(__dirname + "document.pdf");
-    console.log("Done");
+    // console.log("Done");
     res.status(200).json({
       success: true,
     });

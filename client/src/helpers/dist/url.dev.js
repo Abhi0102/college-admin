@@ -29,6 +29,9 @@ var APIUrls = {
   },
   getIdCards: function getIdCards() {
     return "".concat(baseUrl, "/api/student/generateIdCard");
+  },
+  fetchConstants: function fetchConstants() {
+    return "/api/user/fetchConstants";
   }
 }; // ${baseUrl}/api/user/register
 // http://localhost:8000/api/v1

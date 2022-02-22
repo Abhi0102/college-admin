@@ -152,7 +152,7 @@ function StudentTable(props) {
                       const colName = column.id;
                       return colName === "dateOfBirth" ? (
                         <TableCell align="left" key={column.id}>
-                          {new Date(row[colName]).toLocaleDateString()}
+                          {new Date(row[colName]).toLocaleDateString('en-GB')}
                         </TableCell>
                       ) : (
                         <TableCell align="left" key={column.id}>

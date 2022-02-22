@@ -9,7 +9,7 @@ import {
   UPDATE_STUDENT_DETAILS_SUCCESS,
   REMOVE_SINGLE_STUDENT,
 } from "./actionType";
-
+import axios from "axios";
 export function fetchStudent(query) {
   return async (dispatch) => {
     try {
@@ -79,7 +79,7 @@ export function updateStudentDetail(id, detail) {
       const data = await response.json();
       console.log(data);
       if (data.success) {
-        dispatch(updateStudentDetailSuccess(data.student[0]));
+        dispatch(updateStudentDetailSuccess(data.student));
       } else {
         console.log(data);
       }
@@ -93,5 +93,33 @@ function updateStudentDetailSuccess(student) {
   return {
     type: UPDATE_STUDENT_DETAILS_SUCCESS,
     student,
+  };
+}
+
+export function addStudent(formInput) {
+  return async (dispatch) => {
+    try {
+      // dispatch()
+      const url = APIUrls.addStudentForm();
+      const response = await fetch(url, {
+        method: "POST",
+        headers: getHeaderWithAuth(),
+        body: getFormBody(formInput),
+      });
+      const data = await response.json();
+      return data;
+      // axios
+      //   .post(url, getFormBody(formInput), { headers: getHeaderWithAuth() })
+      //   .then((res) => console.log(res));
+    } catch (err) {
+      console.log(err);
+      return {
+        data: {
+          success: false,
+          message: "Some Error Occured While Receiving the data",
+        },
+      };
+      // return err;
+    }
   };
 }

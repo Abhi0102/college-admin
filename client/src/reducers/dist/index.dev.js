@@ -9,6 +9,8 @@ var _redux = require("redux");
 
 var _auth = _interopRequireDefault(require("./auth"));
 
+var _constants = _interopRequireDefault(require("./constants"));
+
 var _fetchStudents = _interopRequireDefault(require("./fetchStudents"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -16,7 +18,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // import studentForm from './studentForm';
 var _default = (0, _redux.combineReducers)({
   auth: _auth["default"],
-  fetchStudents: _fetchStudents["default"]
+  fetchStudents: _fetchStudents["default"],
+  constants: _constants["default"]
 });
 
 exports["default"] = _default;

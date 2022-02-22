@@ -9,6 +9,7 @@ export const APIUrls = {
   fetchStudentById: (id) => `${baseUrl}/api/student/fetchStudentById?id=${id}`,
   updateStudentDetail: () => `${baseUrl}/api/student/patchStudent`,
   getIdCards: () => `${baseUrl}/api/student/generateIdCard`,
+  fetchConstants: () => `/api/user/fetchConstants`,
 };
 
 // ${baseUrl}/api/user/register

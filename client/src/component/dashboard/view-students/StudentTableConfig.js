@@ -13,5 +13,8 @@ export const TABLE_HEAD = [
   { id: "gender", label: "Gender", alignRight: false },
   { id: "category", label: "Category", alignRight: false },
   { id: "mobileNumber", label: "Mobile Number", alignRight: false },
+  { id: "subject1", label: "Subject 1", alignRight: false },
+  { id: "subject2", label: "Subject 2", alignRight: false },
+  { id: "subject3", label: "Subject 3", alignRight: false },
   { id: "" },
 ];

@@ -47,4 +47,6 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   genPDF.getPdf
 );
+
+router.get("/correction", studentAPI.studentCorrection);
 module.exports = router;

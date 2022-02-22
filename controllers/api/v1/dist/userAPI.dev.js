@@ -4,7 +4,13 @@ var User = require("../../../models/user");
 
 var jwt = require("jsonwebtoken");
 
-var nextSeq = require("../../../helpers/appGenerator"); // const { getNextSequence } = require("../../../helpers/appGenerator");
+var nextSeq = require("../../../helpers/appGenerator");
+
+var Constant = require("../../../models/constants");
+
+var FormField = require("../../../models/formField");
+
+var Options = require("../../../models/options"); // const { getNextSequence } = require("../../../helpers/appGenerator");
 
 
 module.exports.register = function _callee(req, res) {
@@ -140,4 +146,89 @@ module.exports.authenticate = function (req, res) {
       success: true
     }
   });
+}; // module.exports.dataCorrection = function(req,res){
+//   const student =
+// }
+
+
+module.exports.fetchConstants = function _callee3(req, res) {
+  var formField, i, data, k, opt, options;
+  return regeneratorRuntime.async(function _callee3$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return regeneratorRuntime.awrap(FormField.find({}).sort("order"));
+
+        case 3:
+          formField = _context3.sent;
+          _context3.t0 = regeneratorRuntime.keys(formField);
+
+        case 5:
+          if ((_context3.t1 = _context3.t0()).done) {
+            _context3.next = 20;
+            break;
+          }
+
+          i = _context3.t1.value;
+          data = formField[i].data;
+          _context3.t2 = regeneratorRuntime.keys(data);
+
+        case 9:
+          if ((_context3.t3 = _context3.t2()).done) {
+            _context3.next = 18;
+            break;
+          }
+
+          k = _context3.t3.value;
+
+          if (!(data[k].type === "select")) {
+            _context3.next = 16;
+            break;
+          }
+
+          _context3.next = 14;
+          return regeneratorRuntime.awrap(Options.findById(data[k].option));
+
+        case 14:
+          opt = _context3.sent;
+          data[k].option = opt.data;
+
+        case 16:
+          _context3.next = 9;
+          break;
+
+        case 18:
+          _context3.next = 5;
+          break;
+
+        case 20:
+          _context3.next = 22;
+          return regeneratorRuntime.awrap(Options.find({}));
+
+        case 22:
+          options = _context3.sent;
+          return _context3.abrupt("return", res.status(200).json({
+            success: true,
+            data: {
+              formField: formField,
+              options: options
+            }
+          }));
+
+        case 26:
+          _context3.prev = 26;
+          _context3.t4 = _context3["catch"](0);
+          return _context3.abrupt("return", res.status(422).json({
+            success: false,
+            message: "Some error occured while fetching Constants"
+          }));
+
+        case 29:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[0, 26]]);
 };

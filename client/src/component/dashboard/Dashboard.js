@@ -5,6 +5,7 @@ import { alpha, styled } from "@mui/material/styles";
 import { Drawer } from "@mui/material";
 import Navbar from "./navbar/Navbar";
 import MuiAppBar from "@mui/material/AppBar";
+import { useSelector } from "react-redux";
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
@@ -110,11 +111,12 @@ const AppBar = styled(MuiAppBar, {
 function Dashboard(props) {
   const [open, setOpen] = useState(true);
   const { pathname } = useLocation();
+  const selector = useSelector((state) => state.constants);
 
   const toggleSidebar = () => {
     setOpen(!open);
   };
-  return (
+  return selector.success ? (
     <>
       <RootStyle>
         <AppBar position="fixed" open={open}>
@@ -150,6 +152,8 @@ function Dashboard(props) {
         {/* </MainStyle> */}
       </RootStyle>
     </>
+  ) : (
+    "Loading"
   );
 }
 

@@ -4,7 +4,6 @@
 //   { value: "Female", label: "Female" },
 //   { value: "Others", label: "Others" },
 // ];
-
 // const indianState = [
 //   { value: "Andhra Pradesh", label: "Andhra Pradesh" },
 //   { value: "Arunachal Pradesh", label: "Arunachal Pradesh" },
@@ -46,7 +45,6 @@
 //   { value: "Lakshadweep", label: "Lakshadweep" },
 //   { value: "Puducherry", label: "Puducherry" },
 // ];
-
 // const category = [
 //   { value: "", label: "Choose..." },
 //   { value: "General", label: "General" },
@@ -55,7 +53,6 @@
 //   { value: "OBC", label: "OBC" },
 //   { value: "EWS", label: "EWS" },
 // ];
-
 // const subCategory = [
 //   { value: "", label: "Choose..." },
 //   { value: "Physically Handicapped", label: "Physically Handicapped" },
@@ -65,13 +62,11 @@
 //     label: "Ward of Ex/Active Defence Personal",
 //   },
 // ];
-
 // const yesNo = [
 //   { value: "", label: "Choose..." },
 //   { value: "Yes", label: "Yes" },
 //   { value: "No", label: "No" },
 // ];
-
 // const religion = [
 //   { value: "", label: "Choose..." },
 //   { value: "Hindu", label: "Hindu" },
@@ -80,18 +75,15 @@
 //   { value: "Christian", label: "Christian" },
 //   { value: "Jain", label: "Jain" },
 // ];
-
 // const region = [
 //   { value: "", label: "Choose..." },
 //   { value: "Urban", label: "Urban" },
 //   { value: "Rural", label: "Rural" },
 // ];
-
 // const studentClass = [
 //   { value: "", label: "Choose..." },
 //   { value: "B.Com. I", label: "B.Com. I" },
 // ];
-
 // export const personalFields = [
 //   { field: "appNo", type: "text" },
 //   { field: "studentName", type: "text" },
@@ -107,7 +99,6 @@
 //   { field: "aadhaarNumber", type: "text" },
 //   { field: "vatsalyaYojana", type: "select", option: yesNo },
 // ];
-
 // export const familyFields = [
 //   { field: "fatherName", type: "text" },
 //   { field: "motherName", type: "text" },
@@ -116,7 +107,6 @@
 //   { field: "annualIncome", type: "text" },
 //   { field: "gaurdianMobileNumber", type: "text" },
 // ];
-
 // export const addressFields = [
 //   { field: "permanentAddress", type: "text" },
 //   { field: "state", type: "select", option: indianState },
@@ -125,7 +115,6 @@
 //   { field: "durationOfResidance", type: "text" },
 //   { field: "residanceOfUK", type: "select", option: yesNo },
 // ];
-
 // export const educationFields = [
 //   { field: "lastAttended", type: "text" },
 //   { field: "instituteRegion", type: "select", option: region },
@@ -134,7 +123,6 @@
 //   //   { field: "durationOfResidance", type: "text" },
 //   //   { field: "residanceOfUK", type: "select", option: yesNo },
 // ];
-
 // export const educationHistoryFields = [
 //   { field: "examination", type: "text" },
 //   { field: "year", type: "select" },
@@ -145,10 +133,10 @@
 //   //   { field: "durationOfResidance", type: "text" },
 //   //   { field: "residanceOfUK", type: "select", option: yesNo },
 // ];
-
 // export const formDetail = [
 //   { title: "Personal Details", data: personalFields },
 //   { title: "Family Details", data: familyFields },
 //   { title: "Address Details", data: addressFields },
 //   { title: "Education Qualification", data: educationFields },
 // ];
+"use strict";

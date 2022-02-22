@@ -42,7 +42,7 @@ function StudentProfile(props) {
         <Typography variant="h4" gutterBottom>
           Student Profile
         </Typography>
-        {Object.keys(student).length !== 0                      && <StudentForm student={student} />}
+        {Object.keys(student).length !== 0 && <StudentForm student={student} />}
       </Container>
     </>
   );

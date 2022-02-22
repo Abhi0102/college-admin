@@ -2,39 +2,48 @@ import React from "react";
 // import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
 import { Button, TextField, Grid, MenuItem } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { fetchStudent } from "../../../actions/fetchStudent";
 
-const gen = [
-  { title: "Choose...", value: "" },
-  { title: "Male", value: "Male" },
-  { title: "Female", value: "Female" },
-  { title: "Others", value: "Others" },
-];
+// const gen = [
+//   { title: "Choose...", value: "" },
+//   { title: "Male", value: "Male" },
+//   { title: "Female", value: "Female" },
+//   { title: "Others", value: "Others" },
+// ];
 
-const cat = [
-  { title: "Choose...", value: "" },
-  { title: "General", value: "General" },
-  { title: "SC", value: "SC" },
-  { title: "ST", value: "ST" },
-  { title: "OBC", value: "OBC" },
-  { title: "EWS", value: "EWS" },
-];
-
-const offeredClass = [
-  { title: "Choose...", value: "" },
-  { title: "B.Com. I", value: "B.Com. I" },
-];
-
-const queryParams = [
-  { label: "Gender", attr: "gender", data: gen },
-  { label: "Category", attr: "category", data: cat },
-  { label: "Class", attr: "class", data: offeredClass },
-];
+// const cat = [
+//   { title: "Choose...", value: "" },
+//   { title: "General", value: "General" },
+//   { title: "SC", value: "SC" },
+//   { title: "ST", value: "ST" },
+//   { title: "OBC", value: "OBC" },
+//   { title: "EWS", value: "EWS" },
+// ];
 
 function ViewStudentFilters(props) {
   const dispatch = useDispatch();
+  const selector = useSelector((state) => state.constants.options);
+
+  let offeredClass = [];
+  let cat = [];
+  let gen = [];
+  for (let i of selector) {
+    if (i.optionDetail === "category") {
+      cat = i.data;
+    } else if (i.optionDetail === "studentClass") {
+      offeredClass = i.data;
+    } else if (i.optionDetail === "gender") {
+      gen = i.data;
+    }
+  }
+
+  const queryParams = [
+    { label: "Gender", attr: "gender", data: gen },
+    { label: "Category", attr: "category", data: cat },
+    { label: "Class", attr: "class", data: offeredClass },
+  ];
 
   const formik = useFormik({
     initialValues: {
@@ -43,9 +52,7 @@ function ViewStudentFilters(props) {
       category: "",
     },
     onSubmit: () => {
-      console.log("Hey");
       dispatch(fetchStudent(formik.values));
-      console.log(formik.values);
     },
   });
 
@@ -69,8 +76,8 @@ function ViewStudentFilters(props) {
                     {...getFieldProps(attr)}
                   >
                     {data.map((option) => (
-                      <MenuItem key={option.title} value={option.value}>
-                        {option.title}
+                      <MenuItem key={option.label} value={option.value}>
+                        {option.label}
                       </MenuItem>
                     ))}
                   </TextField>

@@ -7,6 +7,12 @@ export const model = {
       errorMessage: "Field is Required",
     },
 
+    admDate: {
+      name: "admDate",
+      label: "Admission Date",
+      errorMessage: "Field is Required",
+    },
+
     studentName: {
       name: "studentName",
       label: "Student Name",
@@ -147,43 +153,85 @@ export const model = {
       label: "Institute Last Attended",
       errorMessage: "Field is Required",
     },
+    subject1: {
+      name: "subject1",
+      label: "Subject 1",
+      errorMessage: "Field is Required",
+    },
+    subject2: {
+      name: "subject2",
+      label: "Subject 2",
+      errorMessage: "Field is Required",
+    },
+    subject3: {
+      name: "subject3",
+      label: "Subject 3",
+      errorMessage: "Field is Required",
+    },
     qualification: {
       name: "qualification",
       label: "Qualification",
       errorMessage: "qualification",
+      data: {
+        examination: {
+          name: "examination",
+          label: "Examination",
+          errorMessage: "Field is Required",
+        },
+        year: {
+          name: "year",
+          label: "Year",
+          errorMessage: "Field is Required",
+        },
+        board: {
+          name: "board",
+          label: "Board",
+          errorMessage: "Field is Required",
+        },
+        marks: {
+          name: "marks",
+          label: "Marks",
+          errorMessage: "Field is Required",
+        },
+        subjects: {
+          name: "subjects",
+          label: "Subjects",
+          errorMessage: "Field is Required",
+        },
+      },
     },
 
     // qualification: {
     //   name: "qualification",
     //   label: "Qualification",
     //   errorMessage: "qualification",
-    //   data: {
-    //     examination: {
-    //       name: "examination",
-    //       label: "Examination",
-    //       errorMessage: "Field is Required",
-    //     },
-    //     year: {
-    //       name: "year",
-    //       label: "Year",
-    //       errorMessage: "Field is Required",
-    //     },
-    //     board: {
-    //       name: "board",
-    //       label: "Board",
-    //       errorMessage: "Field is Required",
-    //     },
-    //     marks: {
-    //       name: "marks",
-    //       label: "Marks",
-    //       errorMessage: "Field is Required",
-    //     },
-    //     subjects: {
-    //       name: "subjects",
-    //       label: "Subjects",
-    //       errorMessage: "Field is Required",
-    //     },
+    // data: {
+    //   examination: {
+    //     name: "examination",
+    //     label: "Examination",
+    //     errorMessage: "Field is Required",
     //   },
+    //   year: {
+    //     name: "year",
+    //     label: "Year",
+    //     errorMessage: "Field is Required",
+    //   },
+    //   board: {
+    //     name: "board",
+    //     label: "Board",
+    //     errorMessage: "Field is Required",
+    //   },
+    //   marks: {
+    //     name: "marks",
+    //     label: "Marks",
+    //     errorMessage: "Field is Required",
+    //   },
+    //   subjects: {
+    //     name: "subjects",
+    //     label: "Subjects",
+    //     errorMessage: "Field is Required",
+    //   },
+    // },
     // },
     // qualification: [
     // {
@@ -220,6 +268,7 @@ export const model = {
 const {
   formField: {
     appNo,
+    admDate,
     studentName,
     studentClass,
     gender,
@@ -248,12 +297,16 @@ const {
     examinationPassed,
     lastAttended,
     qualification,
+    subject1,
+    subject2,
+    subject3,
   },
 } = model;
 
 export const initialValues = () => {
   return {
     [appNo.name]: "",
+    [admDate.name]: "",
     [studentName.name]: "",
     [studentClass.name]: "",
     [gender.name]: "",
@@ -281,6 +334,9 @@ export const initialValues = () => {
     [instituteRegion.name]: "",
     [examinationPassed.name]: "",
     [lastAttended.name]: "",
+    [subject1.name]: "",
+    [subject2.name]: "",
+    [subject3.name]: "",
     // [qualification.name]: [
     //   { examination: "", year: "", board: "", marks: "", subjects: "" },
     // ],
@@ -292,6 +348,7 @@ export const filledInitialValues = (data) => {
   //   console.log(data.studentName);
   return {
     [appNo.name]: data.appNo,
+    [admDate.name]: data.admDate,  
     [studentName.name]: data.studentName,
     [studentClass.name]: data.studentClass,
     [gender.name]: data.gender,
@@ -319,8 +376,11 @@ export const filledInitialValues = (data) => {
     [instituteRegion.name]: data.instituteRegion,
     [examinationPassed.name]: data.examinationPassed,
     [lastAttended.name]: data.lastAttended,
+    [subject1.name]: data.subject1,
+    [subject2.name]: data.subject2,
+    [subject3.name]: data.subject3,
     [qualification.name]: data.qualification
-      ? data.qualification.qualification
+      ? data.qualification
       : [{ examination: "", year: "", board: "", marks: "", subjects: "" }],
   };
 };

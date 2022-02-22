@@ -3,14 +3,14 @@ import React, { useState } from "react";
 // import PersonalDetail from "./PersonalDetail";
 import { Form, Formik } from "formik";
 import { initialValues, filledInitialValues, model } from "./FormModel";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 // import FamilyDetails from "./FamilyDetails";
 // import AddressForm from "./AddressForm";
 // import EducationForm from "./EducationForm";
 import EducationHistory from "./EducationHistory";
 import validationSchema from "./FormValidations";
-import { formDetail } from "./Constants";
+// import { formDetail } from "./Constants";
 import GlobalForm from "./GlobalForm";
 import { compareAsc } from "date-fns";
 import { updateStudentDetail } from "../../../actions/fetchStudent";
@@ -25,11 +25,14 @@ import { updateStudentDetail } from "../../../actions/fetchStudent";
 function StudentForm(props) {
   const { student } = props;
   const params = useParams();
+  const selector = useSelector((state) => state.constants);
+  const formDetail = [...selector.fields];
   const dispatch = useDispatch();
   const filledValues = filledInitialValues(student);
   const initials = initialValues();
+
   const [isDisabled, setisDisabled] = useState(true);
-  console.log(student.qualification ? "Hey" : "Nah");
+
   // console.log("Filled Values", filledValues);
   const _handleSubmit = (values, action) => {
     setisDisabled(!isDisabled);
@@ -41,8 +44,6 @@ function StudentForm(props) {
       }
     }
     const changedField2 = JSON.stringify(changedField);
-    console.log(changedField2);
-    console.log(params);
 
     dispatch(updateStudentDetail(params.id, changedField2));
 
