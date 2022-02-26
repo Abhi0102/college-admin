@@ -4,6 +4,7 @@ const nextSeq = require("../../../helpers/appGenerator");
 const Constant = require("../../../models/constants");
 const FormField = require("../../../models/formField");
 const Options = require("../../../models/options");
+const studentAPI = require("./studentAPI");
 // const { getNextSequence } = require("../../../helpers/appGenerator");
 
 module.exports.register = async function (req, res) {
@@ -101,6 +102,19 @@ module.exports.authenticate = function (req, res) {
 module.exports.fetchConstants = async function (req, res) {
   try {
     const formField = await FormField.find({}).sort("order");
+    const classwiseStudentStats = await studentAPI.studentStats("studentClass");
+    const genderwiseStudentStats = await studentAPI.studentStats("gender");
+    const categorywiseStudentStats = await studentAPI.categoryStats();
+
+    // const categorywiseStudentStats = [
+    //   {
+    //     General: 69,
+    //     SC: 4,
+    //     OBC: 1,
+    //     ABC: 0,
+    //   },
+    // ];
+
     for (let i in formField) {
       const data = formField[i].data;
       for (let k in data) {
@@ -114,9 +128,16 @@ module.exports.fetchConstants = async function (req, res) {
 
     return res.status(200).json({
       success: true,
-      data: { formField, options },
+      data: {
+        formField,
+        options,
+        classwiseStudentStats: classwiseStudentStats[0],
+        genderwiseStudentStats: genderwiseStudentStats[0],
+        categorywiseStudentStats: categorywiseStudentStats,
+      },
     });
   } catch (err) {
+    console.log(err);
     return res.status(422).json({
       success: false,
       message: "Some error occured while fetching Constants",

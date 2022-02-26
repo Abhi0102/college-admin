@@ -1,7 +1,13 @@
 import React from "react";
 // import * as Yup from "yup";
 import { useFormik, Form, FormikProvider } from "formik";
-import { Button, TextField, Grid, MenuItem } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Grid,
+  MenuItem,
+  CircularProgress,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchStudent } from "../../../actions/fetchStudent";
@@ -51,8 +57,8 @@ function ViewStudentFilters(props) {
       class: "",
       category: "",
     },
-    onSubmit: () => {
-      dispatch(fetchStudent(formik.values));
+    onSubmit: async (values, actions) => {
+      await dispatch(fetchStudent(values));
     },
   });
 
@@ -93,8 +99,16 @@ function ViewStudentFilters(props) {
                 variant="contained"
                 fullWidth
                 sx={{ height: "100%" }}
+                disabled={formik.isSubmitting}
               >
-                Fetch
+                {formik.isSubmitting ? (
+                  <>
+                    <CircularProgress color="primary" size={24} /> &nbsp;
+                    Fetching...
+                  </>
+                ) : (
+                  `Fetch`
+                )}
               </Button>
             </Grid>
           </Grid>

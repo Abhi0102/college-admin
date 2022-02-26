@@ -12,7 +12,7 @@ function SelectField(props) {
   const { label, data, isDisabled, ...rest } = props;
   const [field, meta] = useField(props);
   const { value: selectedValue } = field;
-  //   console.log(isDisabled);
+  // console.log(rest.fullWidth);
   const { touched, error } = meta;
   const isError = touched && error && true;
   function _renderHelperText() {

@@ -5,7 +5,8 @@ import {
   FETCH_SINGLE_STUDENT,
   FORM_SUBMIT_FAILED,
   FORM_SUBMIT_START,
-  FORM_SUBMIT_SUCCESS,
+  FETCH_SINGLE_STUDENT_FAILED,
+  FETCH_STUDENT_FAIL,
   UPDATE_STUDENT_DETAILS_SUCCESS,
   REMOVE_SINGLE_STUDENT,
 } from "./actionType";
@@ -19,7 +20,11 @@ export function fetchStudent(query) {
         headers: getHeaderWithAuth(),
       });
       const data = await response.json();
-      dispatch(fetchStudentSuccess(data.data.studentList));
+      if (data.data.success) {
+        dispatch(fetchStudentSuccess(data.data.studentList));
+      } else {
+        dispatch(fetchStudentFailed(data.data.error));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -30,6 +35,13 @@ export function fetchStudentSuccess(studentList) {
   return {
     type: FETCH_STUDENT_SUCCESS,
     studentList,
+  };
+}
+
+function fetchStudentFailed(error) {
+  return {
+    type: FETCH_STUDENT_FAIL,
+    error,
   };
 }
 
@@ -45,10 +57,10 @@ export function fetchStudentById(id) {
       if (data.success) {
         dispatch(fetchStudentByIdSuccess(data.student[0]));
       } else {
-        console.log(data);
+        dispatch(fetchStudentByIdFailed(data.error));
       }
     } catch (err) {
-      console.log(err);
+      dispatch(fetchStudentByIdFailed(err));
     }
   };
 }
@@ -58,6 +70,13 @@ export function fetchStudentByIdSuccess(student) {
   return {
     type: FETCH_SINGLE_STUDENT,
     student,
+  };
+}
+
+function fetchStudentByIdFailed(error) {
+  return {
+    type: FETCH_SINGLE_STUDENT_FAILED,
+    error,
   };
 }
 
@@ -77,7 +96,6 @@ export function updateStudentDetail(id, detail) {
         body: getFormBody({ id, detail }),
       });
       const data = await response.json();
-      console.log(data);
       if (data.success) {
         dispatch(updateStudentDetailSuccess(data.student));
       } else {

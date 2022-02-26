@@ -16,6 +16,9 @@ import { FETCH_CONSTANTS_SUCCESS } from "../actions/actionType";
 const initialConstantState = {
   fields: {},
   options: [],
+  classwiseStudentStats: {},
+  genderwiseStudentStats: {},
+  categorywiseStudentStats: {},
   success: false,
 };
 
@@ -26,6 +29,9 @@ export default function fetchStudents(state = initialConstantState, action) {
         ...state,
         fields: action.fields.formField,
         options: action.fields.options,
+        classwiseStudentStats: action.fields.classwiseStudentStats,
+        genderwiseStudentStats: action.fields.genderwiseStudentStats,
+        categorywiseStudentStats:action.fields.categorywiseStudentStats,
         success: true,
       };
 

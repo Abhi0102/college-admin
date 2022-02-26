@@ -43,7 +43,13 @@ function fetchStudent(query) {
 
           case 7:
             data = _context.sent;
-            dispatch(fetchStudentSuccess(data.data.studentList));
+
+            if (data.data.success) {
+              dispatch(fetchStudentSuccess(data.data.studentList));
+            } else {
+              dispatch(fetchStudentFailed(data.data.error));
+            }
+
             _context.next = 14;
             break;
 
@@ -65,6 +71,13 @@ function fetchStudentSuccess(studentList) {
   return {
     type: _actionType.FETCH_STUDENT_SUCCESS,
     studentList: studentList
+  };
+}
+
+function fetchStudentFailed(error) {
+  return {
+    type: _actionType.FETCH_STUDENT_FAIL,
+    error: error
   };
 }
 
@@ -94,7 +107,7 @@ function fetchStudentById(id) {
             if (data.success) {
               dispatch(fetchStudentByIdSuccess(data.student[0]));
             } else {
-              console.log(data);
+              dispatch(fetchStudentByIdFailed(data.error));
             }
 
             _context2.next = 14;
@@ -103,7 +116,7 @@ function fetchStudentById(id) {
           case 11:
             _context2.prev = 11;
             _context2.t0 = _context2["catch"](0);
-            console.log(_context2.t0);
+            dispatch(fetchStudentByIdFailed(_context2.t0));
 
           case 14:
           case "end":
@@ -119,6 +132,13 @@ function fetchStudentByIdSuccess(student) {
   return {
     type: _actionType.FETCH_SINGLE_STUDENT,
     student: student
+  };
+}
+
+function fetchStudentByIdFailed(error) {
+  return {
+    type: _actionType.FETCH_SINGLE_STUDENT_FAILED,
+    error: error
   };
 }
 
@@ -154,7 +174,6 @@ function updateStudentDetail(id, detail) {
 
           case 7:
             data = _context3.sent;
-            console.log(data);
 
             if (data.success) {
               dispatch(updateStudentDetailSuccess(data.student));
@@ -162,20 +181,20 @@ function updateStudentDetail(id, detail) {
               console.log(data);
             }
 
-            _context3.next = 15;
+            _context3.next = 14;
             break;
 
-          case 12:
-            _context3.prev = 12;
+          case 11:
+            _context3.prev = 11;
             _context3.t0 = _context3["catch"](0);
             console.log(_context3.t0);
 
-          case 15:
+          case 14:
           case "end":
             return _context3.stop();
         }
       }
-    }, null, null, [[0, 12]]);
+    }, null, null, [[0, 11]]);
   };
 }
 

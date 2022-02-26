@@ -47,7 +47,7 @@ export function login(userName, password) {
     }
     // console.log(response.status);
     const data = await response.json();
-    console.log(data);
+
     if (!data.data.success) {
       dispatch(loginFailed(data.data.message));
     }

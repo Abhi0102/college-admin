@@ -78,7 +78,6 @@ function login(userName, password) {
 
           case 8:
             data = _context.sent;
-            console.log(data);
 
             if (!data.data.success) {
               dispatch(loginFailed(data.data.message));
@@ -98,7 +97,7 @@ function login(userName, password) {
             // console.log('Hey', userName, password);
 
 
-          case 12:
+          case 11:
           case "end":
             return _context.stop();
         }

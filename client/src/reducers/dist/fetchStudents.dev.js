@@ -13,29 +13,43 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var initialConstantState = {
-  fields: {},
-  options: [],
-  classwiseStudentStats: {},
-  genderwiseStudentStats: {},
-  categorywiseStudentStats: {},
-  success: false
+var initialStudentDetailsState = {
+  studentList: [],
+  student: {},
+  error: null
 };
 
 function fetchStudents() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialConstantState;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialStudentDetailsState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _actionType.FETCH_CONSTANTS_SUCCESS:
+    case _actionType.FETCH_STUDENT_SUCCESS:
       return _objectSpread({}, state, {
-        fields: action.fields.formField,
-        options: action.fields.options,
-        classwiseStudentStats: action.fields.classwiseStudentStats,
-        genderwiseStudentStats: action.fields.genderwiseStudentStats,
-        categorywiseStudentStats: action.fields.categorywiseStudentStats,
-        success: true
+        studentList: action.studentList,
+        error: null
       });
+
+    case _actionType.FETCH_SINGLE_STUDENT:
+    case _actionType.UPDATE_STUDENT_DETAILS_SUCCESS:
+      return _objectSpread({}, state, {
+        student: action.student,
+        error: null
+      });
+
+    case _actionType.REMOVE_SINGLE_STUDENT:
+      return _objectSpread({}, state, {
+        student: {},
+        error: null
+      });
+
+    case _actionType.FETCH_STUDENT_FAIL:
+    case _actionType.FETCH_SINGLE_STUDENT_FAILED:
+      return {
+        studentList: [],
+        student: {},
+        error: action.error
+      };
 
     default:
       return state;

@@ -1,4 +1,11 @@
-import { Avatar, Button, Card, Grid, Stack } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Card,
+  Grid,
+  Stack,
+  CircularProgress,
+} from "@mui/material";
 import React, { useState } from "react";
 // import PersonalDetail from "./PersonalDetail";
 import { Form, Formik } from "formik";
@@ -34,7 +41,7 @@ function StudentForm(props) {
   const [isDisabled, setisDisabled] = useState(true);
 
   // console.log("Filled Values", filledValues);
-  const _handleSubmit = (values, action) => {
+  const _handleSubmit = async (values, action) => {
     setisDisabled(!isDisabled);
     const changedField = {};
     for (let i in values) {
@@ -45,7 +52,7 @@ function StudentForm(props) {
     }
     const changedField2 = JSON.stringify(changedField);
 
-    dispatch(updateStudentDetail(params.id, changedField2));
+    await dispatch(updateStudentDetail(params.id, changedField2));
 
     // console.log(student.qualification);
     // console.log(values, action);
@@ -55,6 +62,11 @@ function StudentForm(props) {
     setisDisabled(!isDisabled);
     // console.log(validationSchema);
   };
+
+  const handleBack = (resetForm) => {
+    resetForm();
+    setisDisabled(!isDisabled);
+  };
   return (
     <>
       <Formik
@@ -62,7 +74,7 @@ function StudentForm(props) {
         validationSchema={validationSchema[0]}
         onSubmit={_handleSubmit}
       >
-        {({ values, errors }) => (
+        {({ resetForm, values, errors, isSubmitting }) => (
           <Form id={model.formId}>
             <Grid container spacing={2}>
               <Grid item md={8}>
@@ -107,14 +119,34 @@ function StudentForm(props) {
                     </Button>
                   )}
                   {!isDisabled && (
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      // size="small"
-                      color="success"
-                    >
-                      Submit
-                    </Button>
+                    <>
+                      <Button
+                        fullWidth
+                        variant="outlined"
+                        color="warning"
+                        onClick={() => handleBack(resetForm)}
+                      >
+                        Back
+                      </Button>
+
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        // size="small"
+                        color="success"
+                        disabled={isSubmitting}
+                        fullWidth
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <CircularProgress color="secondary" size={24} />
+                            &nbsp; Submitting...
+                          </>
+                        ) : (
+                          "Submit"
+                        )}
+                      </Button>
+                    </>
                   )}
                 </Stack>
               </Grid>

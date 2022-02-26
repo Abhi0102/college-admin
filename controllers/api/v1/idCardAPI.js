@@ -338,6 +338,8 @@ function getColor(studentClass) {
       return "#168a01";
     } else if (studentClass.startsWith("B.A.")) {
       return "#800000";
+    } else if (studentClass.startsWith("B.Sc.")) {
+      return "#01638a";
     }
   }
   return "#800000";

@@ -2,7 +2,7 @@ import { useRoutes, Navigate } from "react-router-dom";
 import Dashboard from "./dashboard/Dashboard";
 import StudentForm from "./dashboard/student-form/StudentForm";
 import ViewStudent from "./dashboard/view-students/ViewStudent";
-import DashboardHome from "./dashboard/DashboardHome";
+import DashboardHome from "./dashboard/home/DashboardHome";
 import Login from "./login/Login";
 import PrivateRoute from "../helpers/PrivateRoute";
 import StudentProfile from "./dashboard/student-profile/StudentProfile";
@@ -17,12 +17,18 @@ export default function Router() {
         </PrivateRoute>
       ),
       children: [
-        { element: <Navigate to="/dashboard/home" replace /> },
+        {
+          path: "",
+          element: <Navigate to="/dashboard/home" replace />,
+        },
         { path: "home", element: <DashboardHome /> },
         { path: "student-form", element: <StudentForm /> },
         { path: "view-students", element: <ViewStudent /> },
 
-        { path: "student-profile/:id", element: <StudentProfile /> },
+        {
+          path: "view-students/student-profile/:id",
+          element: <StudentProfile />,
+        },
       ],
     },
     {

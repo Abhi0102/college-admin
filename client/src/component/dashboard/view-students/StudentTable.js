@@ -54,7 +54,7 @@ function applySortFilter(array, comparator) {
 function StudentTable(props) {
   const classes = useStyles();
   // const { classes } = props;
-  console.log(classes);
+  // console.log(classes);
   const { studentList } = props;
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState("appNo");
@@ -152,7 +152,7 @@ function StudentTable(props) {
                       const colName = column.id;
                       return colName === "dateOfBirth" ? (
                         <TableCell align="left" key={column.id}>
-                          {new Date(row[colName]).toLocaleDateString('en-GB')}
+                          {new Date(row[colName]).toLocaleDateString("en-GB")}
                         </TableCell>
                       ) : (
                         <TableCell align="left" key={column.id}>
@@ -163,7 +163,7 @@ function StudentTable(props) {
                     <TableCell align="left">
                       <Box
                         component={RouterLink}
-                        to={`/dashboard/student-profile/${row._id}`}
+                        to={`student-profile/${row._id}`}
                       >
                         {openIcon}
                       </Box>

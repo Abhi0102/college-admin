@@ -92,6 +92,7 @@ module.exports.studentForm = async function (req, res) {
         },
       });
     }
+    console.log(err);
     return res.status(422).json({
       data: {
         success: false,
@@ -110,6 +111,15 @@ module.exports.getStudents = async function (req, res) {
   }
   try {
     const student = await Student.find(searchCriteria);
+
+    if (student.length === 0) {
+      return res.status(200).json({
+        data: {
+          success: false,
+          error: "No student Found",
+        },
+      });
+    }
 
     return res.status(200).json({
       data: {
@@ -142,16 +152,16 @@ module.exports.getStudentById = async function (req, res) {
         student,
       });
     } else {
-      return res.status(422).json({
+      return res.status(200).json({
         success: false,
         error: "No data Found",
       });
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return res.status(422).json({
       success: false,
-      error: "No data Found",
+      error: "Some error occur while fetching records",
     });
   }
 };
@@ -179,6 +189,65 @@ module.exports.patchStudent = async function (req, res) {
     });
   }
 };
+
+module.exports.studentStats = function (statsBy) {
+  const studentStats = Student.aggregate([
+    {
+      $group: {
+        _id: `$${statsBy}`,
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        counts: { $push: { k: "$_id", v: "$count" } },
+      },
+    },
+    {
+      $replaceRoot: {
+        newRoot: { $arrayToObject: "$counts" },
+      },
+    },
+  ]);
+
+  return studentStats;
+};
+
+module.exports.categoryStats = async function () {
+  let stats = {};
+  const [category] = await Options.find({ optionDetail: "category" });
+  const data = category.data;
+  for (let i in data) {
+    if (data[i].value) {
+      stats[data[i].value] = await Student.count({ category: data[i].value });
+    }
+  }
+  return stats;
+};
+
+// module.exports.genderwiseStudentStats = function () {
+//   const genderwiseStudentStats = Student.aggregate([
+//     {
+//       $group: {
+//         _id: "$gender",
+//         count: { $sum: 1 },
+//       },
+//     },
+//     {
+//       $group: {
+//         _id: null,
+//         counts: { $push: { k: "$_id", v: "$count" } },
+//       },
+//     },
+//     {
+//       $replaceRoot: {
+//         newRoot: { $arrayToObject: "$counts" },
+//       },
+//     },
+//   ]);
+//   return genderwiseStudentStats;
+// };
 
 // module.exports.patchStudent = async function (req, res) {
 //   try {

@@ -140,14 +140,14 @@ function Dashboard(props) {
 
         {/* <MainStyle> */}
 
-        {pathname === "/dashboard/view-students" ? (
-          <Main open={open}>
-            <Outlet />
-          </Main>
-        ) : (
+        {pathname.includes("student-profile") ? (
           <Main2 open={open}>
             <Outlet />
           </Main2>
+        ) : (
+          <Main open={open}>
+            <Outlet />
+          </Main>
         )}
         {/* </MainStyle> */}
       </RootStyle>

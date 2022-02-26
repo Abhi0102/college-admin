@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import ViewStudentFilters from "./ViewStudentFilters";
 import StudentTable from "./StudentTable";
 
+import NoDataFound from "../../NoDataFound";
+
 function ViewStudent(props) {
-  const { studentList } = useSelector((state) => state.fetchStudents);
+  const { studentList, error } = useSelector((state) => state.fetchStudents);
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
@@ -14,6 +16,7 @@ function ViewStudent(props) {
 
       <ViewStudentFilters />
 
+      {error && <NoDataFound error={error} />}
       {studentList.length !== 0 && <StudentTable studentList={studentList} />}
     </Container>
   );

@@ -120,6 +120,7 @@ module.exports.studentForm = function _callee(req, res) {
           }));
 
         case 12:
+          console.log(_context.t0);
           return _context.abrupt("return", res.status(422).json({
             data: {
               success: false,
@@ -127,7 +128,7 @@ module.exports.studentForm = function _callee(req, res) {
             }
           }));
 
-        case 13:
+        case 14:
         case "end":
           return _context.stop();
       }
@@ -158,6 +159,20 @@ module.exports.getStudents = function _callee2(req, res) {
 
         case 5:
           student = _context2.sent;
+
+          if (!(student.length === 0)) {
+            _context2.next = 8;
+            break;
+          }
+
+          return _context2.abrupt("return", res.status(200).json({
+            data: {
+              success: false,
+              error: "No student Found"
+            }
+          }));
+
+        case 8:
           return _context2.abrupt("return", res.status(200).json({
             data: {
               success: true,
@@ -165,8 +180,8 @@ module.exports.getStudents = function _callee2(req, res) {
             }
           }));
 
-        case 9:
-          _context2.prev = 9;
+        case 11:
+          _context2.prev = 11;
           _context2.t0 = _context2["catch"](2);
           console.log("Error in finding Students");
           return _context2.abrupt("return", res.status(422).json({
@@ -176,12 +191,12 @@ module.exports.getStudents = function _callee2(req, res) {
             }
           }));
 
-        case 13:
+        case 15:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[2, 9]]);
+  }, null, null, [[2, 11]]);
 };
 
 module.exports.getStudentById = function _callee3(req, res) {
@@ -210,25 +225,24 @@ module.exports.getStudentById = function _callee3(req, res) {
           }));
 
         case 8:
-          return _context3.abrupt("return", res.status(422).json({
+          return _context3.abrupt("return", res.status(200).json({
             success: false,
             error: "No data Found"
           }));
 
         case 9:
-          _context3.next = 15;
+          _context3.next = 14;
           break;
 
         case 11:
           _context3.prev = 11;
           _context3.t0 = _context3["catch"](0);
-          console.log(_context3.t0);
           return _context3.abrupt("return", res.status(422).json({
             success: false,
-            error: "No data Found"
+            error: "Some error occur while fetching records"
           }));
 
-        case 15:
+        case 14:
         case "end":
           return _context3.stop();
       }
@@ -279,7 +293,113 @@ module.exports.patchStudent = function _callee4(req, res) {
       }
     }
   }, null, null, [[0, 9]]);
-}; // module.exports.patchStudent = async function (req, res) {
+};
+
+module.exports.studentStats = function (statsBy) {
+  var studentStats = Student.aggregate([{
+    $group: {
+      _id: "$".concat(statsBy),
+      count: {
+        $sum: 1
+      }
+    }
+  }, {
+    $group: {
+      _id: null,
+      counts: {
+        $push: {
+          k: "$_id",
+          v: "$count"
+        }
+      }
+    }
+  }, {
+    $replaceRoot: {
+      newRoot: {
+        $arrayToObject: "$counts"
+      }
+    }
+  }]);
+  return studentStats;
+};
+
+module.exports.categoryStats = function _callee5() {
+  var stats, _ref, _ref2, category, data, i;
+
+  return regeneratorRuntime.async(function _callee5$(_context5) {
+    while (1) {
+      switch (_context5.prev = _context5.next) {
+        case 0:
+          stats = {};
+          _context5.next = 3;
+          return regeneratorRuntime.awrap(Options.find({
+            optionDetail: "category"
+          }));
+
+        case 3:
+          _ref = _context5.sent;
+          _ref2 = _slicedToArray(_ref, 1);
+          category = _ref2[0];
+          data = category.data;
+          _context5.t0 = regeneratorRuntime.keys(data);
+
+        case 8:
+          if ((_context5.t1 = _context5.t0()).done) {
+            _context5.next = 16;
+            break;
+          }
+
+          i = _context5.t1.value;
+
+          if (!data[i].value) {
+            _context5.next = 14;
+            break;
+          }
+
+          _context5.next = 13;
+          return regeneratorRuntime.awrap(Student.count({
+            category: data[i].value
+          }));
+
+        case 13:
+          stats[data[i].value] = _context5.sent;
+
+        case 14:
+          _context5.next = 8;
+          break;
+
+        case 16:
+          return _context5.abrupt("return", stats);
+
+        case 17:
+        case "end":
+          return _context5.stop();
+      }
+    }
+  });
+}; // module.exports.genderwiseStudentStats = function () {
+//   const genderwiseStudentStats = Student.aggregate([
+//     {
+//       $group: {
+//         _id: "$gender",
+//         count: { $sum: 1 },
+//       },
+//     },
+//     {
+//       $group: {
+//         _id: null,
+//         counts: { $push: { k: "$_id", v: "$count" } },
+//       },
+//     },
+//     {
+//       $replaceRoot: {
+//         newRoot: { $arrayToObject: "$counts" },
+//       },
+//     },
+//   ]);
+//   return genderwiseStudentStats;
+// };
+// module.exports.patchStudent = async function (req, res) {
 //   try {
 //     req.body.detail = JSON.parse(req.body.detail);
 //     let studentDetail = {};
@@ -330,71 +450,71 @@ module.exports.patchStudent = function _callee4(req, res) {
 // };
 
 
-module.exports.studentCorrection = function _callee5(req, res) {
+module.exports.studentCorrection = function _callee6(req, res) {
   var formField, i, data, k, opt, options;
-  return regeneratorRuntime.async(function _callee5$(_context5) {
+  return regeneratorRuntime.async(function _callee6$(_context6) {
     while (1) {
-      switch (_context5.prev = _context5.next) {
+      switch (_context6.prev = _context6.next) {
         case 0:
-          _context5.next = 2;
+          _context6.next = 2;
           return regeneratorRuntime.awrap(FormField.find({}));
 
         case 2:
-          formField = _context5.sent;
-          _context5.t0 = regeneratorRuntime.keys(formField);
+          formField = _context6.sent;
+          _context6.t0 = regeneratorRuntime.keys(formField);
 
         case 4:
-          if ((_context5.t1 = _context5.t0()).done) {
-            _context5.next = 19;
+          if ((_context6.t1 = _context6.t0()).done) {
+            _context6.next = 19;
             break;
           }
 
-          i = _context5.t1.value;
+          i = _context6.t1.value;
           data = formField[i].data;
-          _context5.t2 = regeneratorRuntime.keys(data);
+          _context6.t2 = regeneratorRuntime.keys(data);
 
         case 8:
-          if ((_context5.t3 = _context5.t2()).done) {
-            _context5.next = 17;
+          if ((_context6.t3 = _context6.t2()).done) {
+            _context6.next = 17;
             break;
           }
 
-          k = _context5.t3.value;
+          k = _context6.t3.value;
 
           if (!(data[k].type === "select")) {
-            _context5.next = 15;
+            _context6.next = 15;
             break;
           }
 
-          _context5.next = 13;
+          _context6.next = 13;
           return regeneratorRuntime.awrap(Options.findById(data[k].option));
 
         case 13:
-          opt = _context5.sent;
+          opt = _context6.sent;
           data[k].option = opt.data;
 
         case 15:
-          _context5.next = 8;
+          _context6.next = 8;
           break;
 
         case 17:
-          _context5.next = 4;
+          _context6.next = 4;
           break;
 
         case 19:
-          _context5.next = 21;
+          _context6.next = 21;
           return regeneratorRuntime.awrap(Options.find({}));
 
         case 21:
-          options = _context5.sent;
-          return _context5.abrupt("return", res.status(200).json({
+          options = _context6.sent;
+          return _context6.abrupt("return", res.status(200).json({
             status: true,
             data: formField
           }));
 
         case 23:
         case "end":
-          return _context5.stop();
+          return _context6.stop();
       }
     }
   });
