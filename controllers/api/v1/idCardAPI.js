@@ -1,6 +1,7 @@
 var PdfPrinter = require("pdfmake");
 var fs = require("fs");
 var StudentData = require("../../../models/studentForm");
+const path = require("path");
 
 function getSingleCard(student) {
   return {
@@ -25,7 +26,9 @@ function getSingleCard(student) {
         [
           {
             rowSpan: 2,
-            text: getLogo(),
+            image: path.resolve(__dirname + "\\" + "logo.png"),
+            width: 28,
+            // text: getLogo(),
             border: getLeftSide(),
           },
           {
@@ -127,22 +130,22 @@ function getSingleCard(student) {
           { text: "", border: getRightSide() },
         ],
         [
-          { text: "Receipt No.", border: getLeftSide(), colSpan: 2 },
+          { text: "Mobile", border: getLeftSide(), colSpan: 2 },
           "",
           { text: ":", border: getMidCell() },
           {
-            text: student.receiptNo,
+            text: student.mobileNumber,
             border: getMidCell(),
             style: "highlight",
           },
           {
-            text: "Mobile",
+            text: "",
 
             border: getMidCell(),
           },
-          { text: ":", border: getMidCell() },
+          { text: "", border: getMidCell() },
           {
-            text: student.mobileNumber,
+            text: "",
             border: getMidCell(),
             style: "highlight",
           },
@@ -208,7 +211,13 @@ function getSingleCard(student) {
           { text: "", border: getMidCell() },
           { text: "", border: getMidCell() },
           { text: "", border: getMidCell() },
-          { text: getPrincipalSign(), colSpan: 2, border: getMidCell() },
+          {
+            image: path.resolve(__dirname + "\\" + "principalsign.png"),
+            width: 30,
+            // fit: [100, 100],
+            colSpan: 2,
+            border: getMidCell(),
+          },
           { text: "", border: getMidCell() },
           { text: "", border: getRightSide() },
         ],

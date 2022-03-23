@@ -14,6 +14,8 @@ var fs = require("fs");
 
 var StudentData = require("../../../models/studentForm");
 
+var path = require("path");
+
 function getSingleCard(student) {
   return {
     unbreakable: true,
@@ -27,7 +29,9 @@ function getSingleCard(student) {
         border: [true, true, true, false]
       }, "", "", "", "", "", "", "", "", ""], [{
         rowSpan: 2,
-        text: getLogo(),
+        image: path.resolve(__dirname + "\\" + "logo.png"),
+        width: 28,
+        // text: getLogo(),
         border: getLeftSide()
       }, {
         text: getUnivName(),
@@ -127,24 +131,24 @@ function getSingleCard(student) {
         text: "",
         border: getRightSide()
       }], [{
-        text: "Receipt No.",
+        text: "Mobile",
         border: getLeftSide(),
         colSpan: 2
       }, "", {
         text: ":",
         border: getMidCell()
       }, {
-        text: student.receiptNo,
+        text: student.mobileNumber,
         border: getMidCell(),
         style: "highlight"
       }, {
-        text: "Mobile",
+        text: "",
         border: getMidCell()
       }, {
-        text: ":",
+        text: "",
         border: getMidCell()
       }, {
-        text: student.mobileNumber,
+        text: "",
         border: getMidCell(),
         style: "highlight"
       }, "", "", {
@@ -232,7 +236,9 @@ function getSingleCard(student) {
         text: "",
         border: getMidCell()
       }, {
-        text: getPrincipalSign(),
+        image: path.resolve(__dirname + "\\" + "principalsign.png"),
+        width: 30,
+        // fit: [100, 100],
         colSpan: 2,
         border: getMidCell()
       }, {

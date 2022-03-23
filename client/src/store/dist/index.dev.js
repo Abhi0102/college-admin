@@ -11,11 +11,11 @@ var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
 
 var _reducers = _interopRequireDefault(require("../reducers"));
 
-var _reduxLogger = _interopRequireDefault(require("redux-logger"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import logger from "redux-logger";
 function configureStore() {
-  var store = (0, _redux.createStore)(_reducers["default"], (0, _redux.applyMiddleware)(_reduxThunk["default"], _reduxLogger["default"]));
+  var store = (0, _redux.createStore)(_reducers["default"], (0, _redux.applyMiddleware)(_reduxThunk["default"] // logger
+  ));
   return store;
 }

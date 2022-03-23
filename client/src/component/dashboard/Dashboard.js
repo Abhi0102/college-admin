@@ -6,11 +6,14 @@ import { Drawer } from "@mui/material";
 import Navbar from "./navbar/Navbar";
 import MuiAppBar from "@mui/material/AppBar";
 import { useSelector } from "react-redux";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
 const DRAWER_WIDTH = 280;
-const APPBAR_MOBILE = 64;
+const DRAWER_WIDTH_MOBILE = 240;
+
 const APPBAR_DESKTOP = 64;
 
 const RootStyle = styled("div")({
@@ -25,23 +28,31 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
     overflowY: "auto",
     paddingTop: APP_BAR_MOBILE + 24,
     paddingBottom: theme.spacing(10),
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("md")]: {
       paddingTop: APP_BAR_DESKTOP + 24,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
+      marginLeft: `-${DRAWER_WIDTH}px`,
+      ...(open && {
+        transition: theme.transitions.create("margin", {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+      }),
     },
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: `-${DRAWER_WIDTH}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
+    // marginLeft: `-${DRAWER_WIDTH}px`,
+    // ...(open && {
+    // transition: theme.transitions.create("margin", {
+    //   easing: theme.transitions.easing.easeOut,
+    //   duration: theme.transitions.duration.enteringScreen,
+    // }),
+    // marginLeft: 0,
+    // }),
   })
 );
 
@@ -51,22 +62,22 @@ const Main2 = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
     // overflowY: "auto",
     paddingTop: APP_BAR_MOBILE + 24,
     paddingBottom: theme.spacing(10),
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("md")]: {
       paddingTop: APP_BAR_DESKTOP + 24,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
+      marginLeft: `-${DRAWER_WIDTH}px`,
+      ...(open && {
+        transition: theme.transitions.create("margin", {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+      }),
     },
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${DRAWER_WIDTH}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
     }),
   })
 );
@@ -109,34 +120,65 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 function Dashboard(props) {
-  const [open, setOpen] = useState(true);
+  const theme = useTheme();
+  const isMedium = useMediaQuery(theme.breakpoints.up("md"));
+
+  const [open, setOpen] = useState(isMedium ? false : true);
   const { pathname } = useLocation();
+
   const selector = useSelector((state) => state.constants);
 
   const toggleSidebar = () => {
     setOpen(!open);
   };
+
   return selector.success ? (
     <>
       <RootStyle>
         <AppBar position="fixed" open={open}>
-          <Navbar toggleSidebar={toggleSidebar} />
+          <Navbar
+            toggleSidebar={toggleSidebar}
+            open={open}
+            isMedium={isMedium}
+          />
         </AppBar>
-        <Drawer
-          open={open}
-          sx={{
-            width: DRAWER_WIDTH,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
+
+        {isMedium && (
+          <Drawer
+            open={open}
+            sx={{
               width: DRAWER_WIDTH,
-              boxSizing: "border-box",
-            },
-          }}
-          variant="persistent"
-          anchor="left"
-        >
-          <Sidebar />
-        </Drawer>
+              flexShrink: 0,
+              "& .MuiDrawer-paper": {
+                width: DRAWER_WIDTH,
+                boxSizing: "border-box",
+              },
+            }}
+            variant="persistent"
+            anchor="left"
+          >
+            <Sidebar />
+          </Drawer>
+        )}
+
+        {!isMedium && (
+          <Drawer
+            open={open}
+            onClose={() => setOpen(!open)}
+            sx={{
+              width: DRAWER_WIDTH_MOBILE,
+              flexShrink: 0,
+              "& .MuiDrawer-paper": {
+                width: DRAWER_WIDTH,
+                boxSizing: "border-box",
+              },
+            }}
+            // variant="persistent"
+            anchor="left"
+          >
+            <Sidebar />
+          </Drawer>
+        )}
 
         {/* <MainStyle> */}
 

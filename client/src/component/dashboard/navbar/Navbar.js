@@ -5,10 +5,17 @@ import menu2Fill from "@iconify/icons-eva/menu-2-fill";
 // material
 import { Box, Avatar, Stack, IconButton } from "@mui/material";
 
-function Navbar({ toggleSidebar }) {
+function Navbar({ toggleSidebar, isMedium, open }) {
   return (
     <Box display="flex">
-      <IconButton onClick={toggleSidebar} sx={{ mr: 1, color: "text.primary" }}>
+      <IconButton
+        onClick={toggleSidebar}
+        sx={{
+          mr: 1,
+          color: "text.primary",
+          display: !isMedium && open ? "none" : "",
+        }}
+      >
         <Icon icon={menu2Fill} />
       </IconButton>
       <Box sx={{ flexGrow: 1 }} />

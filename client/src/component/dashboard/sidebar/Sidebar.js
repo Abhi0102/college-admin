@@ -2,19 +2,11 @@ import React, { useEffect } from "react";
 // import MuiDrawer from "@mui/material/Drawer";
 import { styled } from "@mui/material/styles";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import {
-  Box,
-  Link,
-  Typography,
-  Avatar,
-  Button,
-  Stack,
-} from "@mui/material";
+import { Box, Link, Typography, Avatar, Button, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import NavSection from "./NavSection";
 import { sidebarConfig } from "./SidebarConfig";
 import { logout } from "../../../actions/auth";
-
 
 const AccountStyle = styled("div")(({ theme }) => ({
   display: "flex",
@@ -26,6 +18,8 @@ const AccountStyle = styled("div")(({ theme }) => ({
 function Sidebar({ isOpenSidebar, onCloseSidebar }) {
   const pathname = useLocation();
   const dispatch = useDispatch();
+
+  // console.log();
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -40,11 +34,10 @@ function Sidebar({ isOpenSidebar, onCloseSidebar }) {
   };
   return (
     <>
-    
       <Stack>
         <Box sx={{ px: 2.5, py: 3 }}>
           <Box component={RouterLink} to="/" sx={{ display: "inline-flex" }}>
-            <Avatar />
+            <Avatar src="/logo.png" alt="logo" sx={{ height: 70, width: 70 }} />
           </Box>
         </Box>
         <Box sx={{ mb: 5, mx: 2.5 }}>
@@ -67,7 +60,6 @@ function Sidebar({ isOpenSidebar, onCloseSidebar }) {
           </Button>
         </Box>
       </Stack>
-
     </>
   );
 }
