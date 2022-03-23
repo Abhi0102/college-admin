@@ -37,7 +37,7 @@ function TableToolbar({ numSelected, selected }) {
         setGenerating(false);
       })
       .catch((err) => {
-        console.log("Error - ", err);
+        console.log("Error - ", err.response.data);
         setGenerating(false);
       });
   };

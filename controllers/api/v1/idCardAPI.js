@@ -26,7 +26,7 @@ function getSingleCard(student) {
         [
           {
             rowSpan: 2,
-            image: path.resolve(__dirname + "\\" + "logo.png"),
+            image: path.resolve(__dirname, "logo.png"),
             width: 28,
             // text: getLogo(),
             border: getLeftSide(),
@@ -212,7 +212,7 @@ function getSingleCard(student) {
           { text: "", border: getMidCell() },
           { text: "", border: getMidCell() },
           {
-            image: path.resolve(__dirname + "\\" + "principalsign.png"),
+            image: path.resolve(__dirname, "principalsign.png"),
             width: 30,
             // fit: [100, 100],
             colSpan: 2,
